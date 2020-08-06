@@ -145,26 +145,37 @@ long positions[2];
 for (int i = 0; i <= 35; i++) {
  
   float widthW = wCoordinates[i];
-float lengthL = lCoordinates[i];
 
   float nextWidthW = wCoordinates[i+1];
-float nextlengthL = lCoordinates[i+1];
 
   float currentPositionX = widthW*w;
-float currentPositionY = lengthL*w*1.7;
+
 
   float nextPositionX = nextWidthW*w;
-float nextPositionY = nextlengthL*w*1.7;
+
   
   stepper1.setMaxSpeed(abs(nextPositionX - currentPositionX));
-stepper2.setMaxSpeed(abs(nextPositionY - currentPositionY));
+
   
 
 positions[0] = currentPositionX;
-positions[1] = currentPositionY;
+
   
    steppers.moveTo(positions);
    steppers.runSpeedToPosition();
+    
+    for (int j=0; j<=35; j++){
+      
+      float lengthL = lCoordinates[i];
+      float nextlengthL = lCoordinates[i+1];
+      float currentPositionY = lengthL*w*1.7;
+      float nextPositionY = nextlengthL*w*1.7;
+      stepper2.setMaxSpeed(abs(nextPositionY - currentPositionY));
+      positions[1] = currentPositionY;
+      break;
+    }
+   
+      
  delay(1000);
 }
 
